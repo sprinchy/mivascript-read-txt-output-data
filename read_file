@@ -1,0 +1,49 @@
+<MvIMPORT FILE="data.txt" FIELDS="l.full_name,l.id,l.email,l.country,l.created_at" DELIMITER=",">
+   
+    <MvASSIGNARRAY NAME = "l.fields" VALUE = "{l.id}">
+       <MvDIMENSION INDEX = "{ g.recno }">
+       <MvMEMBER NAME = "id">
+    </MvASSIGNARRAY>
+
+    <MvASSIGNARRAY NAME = "l.fields" VALUE = "{l.full_name}">
+       <MvDIMENSION INDEX = "{ g.recno }">
+       <MvMEMBER NAME = "full_name">
+    </MvASSIGNARRAY>
+
+    <MvASSIGNARRAY NAME = "l.fields" VALUE = "{l.email}">
+       <MvDIMENSION INDEX = "{ g.recno }">
+       <MvMEMBER NAME = "email">
+    </MvASSIGNARRAY>
+
+    <MvASSIGNARRAY NAME = "l.fields" VALUE = "{l.country}">
+       <MvDIMENSION INDEX = "{ g.recno }">
+       <MvMEMBER NAME = "country">
+    </MvASSIGNARRAY>
+
+    <MvASSIGNARRAY NAME = "l.fields" VALUE = "{l.created_at}">
+       <MvDIMENSION INDEX = "{ g.recno }">
+       <MvMEMBER NAME = "created_at">
+    </MvASSIGNARRAY>
+
+</MvIMPORT>
+
+
+<MvASSIGN NAME="g.index" VALUE="{ 1 }">
+<table>
+<MvWHILE EXPR="{ g.index LE g.recno }">
+    <tr>
+        <td>
+            <MvIF EXPR = "{ isalpha( l.fields[g.index]:id ) EQ 1 }">
+                <MvEVAL EXPR="{ l.fields[g.index]:id }">
+            <MvELSE>
+                <MvEVAL EXPR="{ l.fields[g.index]:id + 1 }">
+            </MvIF>
+        </td>
+        <td><MvEVAL EXPR = "{ l.fields[g.index]:full_name }"></td>
+        <td><MvEVAL EXPR = "{ l.fields[g.index]:email }"></td>
+        <td><MvEVAL EXPR = "{ l.fields[g.index]:country }"></td>
+        <td><MvEVAL EXPR = "{ l.fields[g.index]:created_at }"></td>
+    </tr>
+    <MvASSIGN NAME="g.index" VALUE="{ g.index + 1 }">
+</MvWHILE>
+</table>
